@@ -72,6 +72,18 @@ int list_files_in_path(char *path);
 
 
 /*
+ * 较难！
+ * 功能描述：在指定文件夹下查找名字中有name的文件(夹)，
+ *          并把节点的指针存储在一个只读链表(数组)中
+ * 难点：要使用二级指针
+ * 优化：效率可能会很低，可以想办法建一个索引
+*/
+FileNode **find(FileNode * dir, char *name);
+FileNode **find(char * path, char *name);
+
+
+
+/*
  * 实现功能：修改此FileNode对应文件(夹)的名字，不仅要在这个系统中修改，还要对此文件的实际名字修改
  * 功能要求：
  *      1. 修改二叉树中存储的信息
