@@ -1,4 +1,3 @@
-#include "NodeInfo.h"
 /*
  * time：2019年12月7日 11点38分
  * autho：宋淳
@@ -6,6 +5,18 @@
  *      理论上应只对外暴露这些函数的声明，屏蔽内部实现。
  *      在设计GUI时和命令行控制时也应只调用这些函数。
  */
+
+
+
+/*
+ * 实现功能：在node文件夹下新建一个名称为fileName的文件
+ * 实现要求：
+ *      1. 检查是否为文件夹，检查fileName是否已存在
+ *      2. 先新建文件，再创建此文件二叉树节点，把节点插到node的左孩子
+ */
+int new_file(FileNode *node, char *fileName);
+int new_file_in_path(char *path, char *fileName);
+
 
 
 /*
@@ -18,6 +29,8 @@
  */
 FilesBiTree create_files_bitree(char *path);
 
+
+
 /*
  * 返回类型：OK表示成功执行，ERROR表示执行失败
  * 实现功能：打印此目录下的文件(夹)，参考在powerShell中使用tree命令的效果
@@ -26,8 +39,9 @@ FilesBiTree create_files_bitree(char *path);
  *          2. 若文件夹为空，则直接返回
  *          3. 递归调用，输出此文件夹下的所有文件(夹)
  */
-int print_files(FileBiTree tree);
+int print_files(FilesBiTree tree);
 int print_files_in_path(char *path);   //功能同上，接受路径作为参数，可调用print_files函数
+
 
 
 /*
@@ -41,8 +55,9 @@ int print_files_in_path(char *path);   //功能同上，接受路径作为参数
  *              同时，若最长长度超过某个值，则用这个值，字符串直接截掉
  *          4. 可调用sort_nodes_by_name()函数将文件排序整齐
  */
-int list_files_name_only(FileBiTree tree);
+int list_files_name_only(FilesBiTree tree);
 int list_files_name_only_in_path(char *path); //功能同上，接受路径作为参数，可调用以上函数
+
 
 
 /*
@@ -56,15 +71,16 @@ int list_files_in_path(char *path);
 
 
 
-
 /*
  * 实现功能：修改此FileNode对应文件(夹)的名字，不仅要在这个系统中修改，还要对此文件的实际名字修改
  * 功能要求：
  *      1. 修改二叉树中存储的信息
  *      2. 修改实际文件信息
+ *      3. 要更新节点的信息，就是修改时间那一项
 */
 int rename_file(FileNode *node);
 int rename_file_in_path(char *path);
+
 
 
 /*
@@ -110,6 +126,17 @@ int copy_file_in_path(char *destPath, char *sourcePath);
 
 
 /*
+ * 功能描述：把node文件移动到destPath目录下
+ * 实习要求：
+ *      1. 判断destPath和node
+ * 实现思路：可用copy_file函数和remove_file函数
+*/
+int move_file(char *destPath, FileNode *node);
+int move_file_in_path(char *destPath, char *sourcePath);
+
+
+
+/*
  * 实现功能：只对tree目录下的这一层文件进行排序，ordering是排序方式，
  *          有name，modifyTime，size，拓展名(拓展名按字典序排，拓展名相同按name排)，
  *          以及升序降序的方式
@@ -122,14 +149,3 @@ int copy_file_in_path(char *destPath, char *sourcePath);
 */
 void sort_files(FilesBiTree tree, char *ordering);
 void sort_files_in_path(char *path);
-
-
-
-/*
- * 实现功能：在node文件夹下新建一个名称为fileName的文件
- * 实现要求：
- *      1. 检查是否为文件夹，检查fileName是否已存在
- *      2. 先新建文件，再创建此文件二叉树节点，把节点插到node的左孩子
- */
-int new_file(FileNode *node, char *fileName);
-int new_file_in_path(char *path, char *fileName);

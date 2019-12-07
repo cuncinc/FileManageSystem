@@ -25,8 +25,8 @@ typedef struct FileInfo FileInfo;
 struct FileNode
 {
     struct FileInfo * info;
-    struct Node * lch;  //左孩子    //命名不规范
-    struct eNode * rch;  //右孩子    //命名不规范
+    struct FileNode * lch;  //左孩子    //命名不规范
+    struct FileNode * rch;  //右孩子    //命名不规范
 };
-typedef struct Node FileNode;
-typedef struct Node *FilesBiTree;
+typedef struct FileNode FileNode;
+typedef struct FileNode *FilesBiTree;
