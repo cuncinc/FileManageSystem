@@ -1,3 +1,4 @@
+#include "NodeInfo.h"
 /*
  * time：2019年12月7日 11点38分
  * autho：宋淳
