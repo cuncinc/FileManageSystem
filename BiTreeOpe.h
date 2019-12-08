@@ -6,7 +6,8 @@
  *      在设计GUI时和命令行控制时也应只调用这些函数。
  */
 
-
+/*modify: 谢文韬*/
+#include"NodeInfo.h"
 
 /*
  * 实现功能：在node文件夹下新建一个名称为fileName的文件
@@ -79,7 +80,7 @@ int list_files_in_path(char *path);
  * 优化：效率可能会很低，可以想办法建一个索引
 */
 FileNode **find(FileNode * dir, char *name);
-FileNode **find(char * path, char *name);
+//FileNode **find(char * path, char *name);
 
 
 
