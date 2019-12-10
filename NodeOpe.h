@@ -28,14 +28,14 @@ long get_file_size(char *str);
  *      1.先判断path是否为文件夹或不存在，是的话直接返回NULL
  *      2.可调用其他已经写好的函数，节点的所有信息都要获取
 */
-// FileInfo * create_info_node(char *path);
+FileInfo * create_info_node(char *path);
 
 
 
-// boolean is_file(FileNode *node);    //如果节点寸的是文件则返回true，否则返回false
-// boolean is_folder(FileNode *node);  //是文件夹则返回true，否则返回false
-// boolean file_exsists(char *path);   //若path不存在或者是文件夹，返回false
-// boolean folder_exsists(char *path); //若path不存在或是文件，返回false
+boolean is_file(FileNode *node);    //如果节点寸的是文件则返回true，否则返回false
+boolean is_folder(FileNode *node);  //是文件夹则返回true，否则返回false
+boolean file_exsists(char *path);   //若path不存在或者是文件夹，返回false
+boolean folder_exsists(char *path); //若path不存在或是文件，返回false
 
 
 
