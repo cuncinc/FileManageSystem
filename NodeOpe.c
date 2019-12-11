@@ -14,7 +14,7 @@
 
 #include"NodeInfo.h"
 #include"State.h"
-#define maxlen 50
+#define maxlen 100 //文件路径的长度最大为100 
 
 /*
  * Author: 谢文韬
