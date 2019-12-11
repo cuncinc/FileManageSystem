@@ -7,16 +7,8 @@
  */
 
 /*modify: 谢文韬*/
-#include"NodeInfo.h"
-
-/*
- * 实现功能：在node文件夹下新建一个名称为fileName的文件
- * 实现要求：
- *      1. 检查是否为文件夹，检查fileName是否已存在
- *      2. 先新建文件，再创建此文件二叉树节点，把节点插到node的左孩子
- */
-int new_file(FileNode *node, char *fileName);
-int new_file_in_path(char *path, char *fileName);
+#include "NodeInfo.h"
+#include "State.h"
 
 
 
@@ -29,6 +21,25 @@ int new_file_in_path(char *path, char *fileName);
  *      4. 可调用creat_node函数
  */
 FilesBiTree create_files_bitree(char *path);
+
+
+
+/*
+ * 实现功能：在node文件夹下新建一个名称为fileName的文件
+ * 实现要求：
+ *      1. 检查node是否为文件夹，检查fileName是否已存在
+ *      2. 先新建实际的文件，再创建此文件二叉树节点，把节点插到node的左孩子
+ */
+int add_file(FileNode *node, char *fileName);
+int add_file_in_path(char *path, char *fileName);
+
+
+/*
+ * 实现功能：在node文件夹下新建一个名为folderName的文件夹
+ * 要求：同上
+*/
+int add_folder(FileNode *node, char *folderName);
+int add_folder(char *path, char *fileName);
 
 
 
@@ -125,16 +136,43 @@ int remove_folder_in_path(char *path);
 
 
 /*
+ * 实现功能：复制功能
+ * 实现步骤：
+ *      1. 判断destPath是否为存在的文件夹
+ *      2. 若node为folder型，调用copy_folder函数；否则调用copy_file
+*/
+int copy_node(char *destPath, FileNode * node);
+//把绝对路径为sourcePath的文件(夹)复制到destPath文件夹下，实现同上，
+//把sourcePath翻译为相应的node参数，若没有则返回错误代码ERROR
+int copy_node_in_path(char *destPath, char *sourcePath);
+
+
+
+/*
  * 实现功能：把node指向的节点复制到目标路径destPath下
  * 实现要求：
- *      1. 判断destPath是否为文件夹
- *      2. 把node接到destPath的左孩子，或者左孩子的右孩子上
- *      3. 实际的文件复制操作
+ *      1. 把node接到destPath的左孩子，或者左孩子的右孩子上
+ *      2. 实际的文件复制操作
 */
 int copy_file(char * destPath, FileNode *node);
 
-//把绝对路径为sourcePath的文件复制到destPath文件夹下
-int copy_file_in_path(char *destPath, char *sourcePath);
+
+
+
+
+/*
+ * 实现功能：把node指向的目录复制到destPath下，
+ *          注意这是要复制一整个目录(包括其下的所有文件(夹))到目标路径
+ * 实现要求：
+ *      1. 判断node是否为目录
+ *      2.
+*/
+int copy_dolder(char *destPath, FileNode *node);
+
+
+
+
+
 
 
 
