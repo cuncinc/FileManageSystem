@@ -7,10 +7,22 @@
  */
 
 /*modify: 谢文韬*/
+//实现这个头文件时，要引入InfoOpe.h，可以使用里面的函数
+
+
+#ifndef BITREEOPE_H
+#define BITREEOPE_H
+
 #include "NodeInfo.h"
 #include "State.h"
 
-
+// 没考虑清楚，必须要传入2个参数才行
+// /*
+//  * 实现功能：分别从path得到与之对应的FileNode和从FileNode得到对应的path
+//  *
+// */
+// FileNode * get_node_from_path(char *path);
+// char * get_path_from_node(FileNode *node);
 
 /*
  * 功能描述：创建path目录下的二叉树
@@ -34,12 +46,13 @@ int add_file(FileNode *node, char *fileName);
 int add_file_in_path(char *path, char *fileName);
 
 
+
 /*
  * 实现功能：在node文件夹下新建一个名为folderName的文件夹
  * 要求：同上
 */
 int add_folder(FileNode *node, char *folderName);
-int add_folder(char *path, char *fileName);
+int add_folder_in_path(char *path, char *folderName);
 
 
 
@@ -51,8 +64,8 @@ int add_folder(char *path, char *fileName);
  *          2. 若文件夹为空，则直接返回
  *          3. 递归调用，输出此文件夹下的所有文件(夹)
  */
-int print_files(FilesBiTree tree);
-int print_files_in_path(char *path);   //功能同上，接受路径作为参数，可调用print_files函数
+int tree_files(FilesBiTree tree);
+int tree_files_in_path(char *path);   //功能同上，接受路径作为参数，可调用print_files函数
 
 
 
@@ -86,12 +99,19 @@ int list_files_in_path(char *path);
 /*
  * 较难！
  * 功能描述：在指定文件夹下查找名字中有name的文件(夹)，
- *          并把节点的指针存储在一个只读链表(数组)中
+ *          并把节点的指针存储在一个只读链表(数组)中，在UI中显示是需要二级指针
  * 难点：要使用二级指针
  * 优化：效率可能会很低，可以想办法建一个索引
 */
 FileNode **find(FileNode * dir, char *name);
-//FileNode **find(char * path, char *name);
+
+
+
+/*
+ * 功能描述：在dirPath文件夹下查找名字中有name的文件(夹)，
+ *          并像ls一样打印其详细信息到屏幕上
+*/
+int find_and_list(char * dirPath, char *name);
 
 
 
@@ -102,8 +122,8 @@ FileNode **find(FileNode * dir, char *name);
  *      2. 修改实际文件信息
  *      3. 要更新节点的信息，就是修改时间那一项
 */
-int rename_file(FileNode *node);
-int rename_file_in_path(char *path);
+int rename_file(FileNode *node, char *newName);
+int rename_file_in_path(char *path, char *newName);
 
 
 
@@ -158,8 +178,6 @@ int copy_file(char * destPath, FileNode *node);
 
 
 
-
-
 /*
  * 实现功能：把node指向的目录复制到destPath下，
  *          注意这是要复制一整个目录(包括其下的所有文件(夹))到目标路径
@@ -167,12 +185,7 @@ int copy_file(char * destPath, FileNode *node);
  *      1. 判断node是否为目录
  *      2.
 */
-int copy_dolder(char *destPath, FileNode *node);
-
-
-
-
-
+int copy_folder(char *destPath, FileNode *node);
 
 
 
@@ -200,3 +213,7 @@ int move_file_in_path(char *destPath, char *sourcePath);
 */
 void sort_files(FilesBiTree tree, char *ordering);
 void sort_files_in_path(char *path);
+
+
+
+#endif

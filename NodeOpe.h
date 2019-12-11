@@ -1,3 +1,7 @@
+#ifndef _NODEOPE_H
+#define _NODEOPE_H
+
+
 /*
  * 字符串操作，从路径种返回文件基本名(除了拓展名的字符串)
  * 如C:\\test.txt返回test
@@ -32,8 +36,8 @@ FileInfo * create_info_node(char *path);
 
 
 
-boolean is_file(FileNode *node);    //如果节点寸的是文件则返回true，否则返回false
-boolean is_folder(FileNode *node);  //是文件夹则返回true，否则返回false
+boolean is_file_node(FileNode *node);    //如果节点寸的是文件则返回true，否则返回false
+boolean is_folder_node(FileNode *node);  //是文件夹则返回true，否则返回false
 boolean file_exsists(char *path);   //若path不存在或者是文件夹，返回false
 boolean folder_exsists(char *path); //若path不存在或是文件，返回false
 
@@ -45,3 +49,6 @@ boolean folder_exsists(char *path); //若path不存在或是文件，返回false
 //  * 注意要用动态内存
 //  */
 // char * get_dir(char * path);
+
+
+#endif

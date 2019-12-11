@@ -4,6 +4,9 @@
  * 描述：定义了节点、树的结构体
  */
 
+#ifndef NODEINFO_H
+#define NODEINFO_H
+
 enum NodeType
 {
     folder,  //folder是0
@@ -14,6 +17,7 @@ struct FileInfo
 {
     enum NodeType type; //节点存储的类型，folder和file
     char * path;        //文件(夹)绝对路径名。如C盘User目录的test.txt存为"C:\\User\\test.txt"
+    char * baseName;    //文件(夹)的名字，文件名包含拓展名
     long modifyTimeNum; //从1970年到现在的秒数(或者毫秒)，便于排序   //命名有点不规范
     char *modifyTime;   //用字符串存储的时间   //需约定格式
     long size;          //文件(夹)大小，单位是字节。文件为其本身大小；文件夹为里面所有文件的总大小
@@ -30,3 +34,7 @@ struct FileNode
 };
 typedef struct FileNode FileNode;
 typedef struct FileNode *FilesBiTree;
+
+
+
+#endif
