@@ -134,8 +134,9 @@ int rename_file_in_path(char *path, char *newName);
  *          实现者不用管左右孩子，那是调用者该关心的。
  * 实现要求：
  *      1.判断是文件还是文件夹，若是文件夹直接返回
- *      2.删除二叉树的节点
- *      3.删除实际文件，若权限不够则不理会了
+ *      2.把要删除的节点的动态内存free掉
+ *      3.删除二叉树的节点
+ *      4.删除实际文件，若权限不够则不理会了
 */
 int remove_file(FileNode *node);
 int remove_file_in_path(char *path);
@@ -148,7 +149,8 @@ int remove_file_in_path(char *path);
  * 实现功能：删除此文件夹下的所有文件，循环free节点。
  * 实现要求：
  *      1.判断是文件夹还是文件，是文件就直接返回
- *      2.删除此节点的左孩子及其所有孩子(其右孩子和它是同一个级别的文件)
+ *      2.free掉所有动态内存
+ *      3.删除此节点的左孩子及其所有孩子(其右孩子和它是同一个级别的文件)
 */
 int remove_folder(FileNode *node);
 int remove_folder_in_path(char *path);
