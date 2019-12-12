@@ -245,7 +245,7 @@ FileInfo * create_info_node(char * path)
 			filenum++;  //文件数目加加
 		}
 		closedir(dir);
-		filehead->innerFileNum = filenum;
+		filehead->innerFileNum = filenum - 2;
 	}
 	return filehead;
 }
