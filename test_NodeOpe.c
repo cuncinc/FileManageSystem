@@ -1,47 +1,47 @@
 #include"NodeOpe.c"
-//æµ‹è¯•NodeOpe.cæ–‡ä»¶é‡Œå‡½æ•°æ­£ç¡®æ€§
-//Author:è°¢æ–‡éŸ¬
+//²âÊÔNodeOpe.cÎÄ¼şÀïº¯ÊıÕıÈ·??
+//Author:Ğ»ÎÄ??
 //2019.12.11
 int main()
 {
-	char *path1 = "E:\\CC\\Code\\VSCode\\Default\\Data structure\\FMS\\test_NodeOpe.c"; //æ–‡ä»¶
-	char *path2 = "E:\\CC\\Code\\VSCode\\Default\\Data structure\\FMS"; //æ–‡ä»¶å¤¹
+	char *path1 = "E:\\CC\\Code\\VSCode\\Default\\Data structure\\FMS\\test_NodeOpe.c"; //ÎÄ¼ş
+	char *path2 = "E:\\CC\\Code\\VSCode\\Default\\Data structure\\FMS"; //ÎÄ¼ş??
+	char *path3 = "E:\\CC\\Code\\From_GitHub\\Xin-Yue\\ÏÖ³¡?_?ÎÒËùÇ×ÀúµÄµËÍ¬Ñ§±»Ô¼Ì¸ÊÂ¼ş.png";
+// ²âÊÔget_base_name()º¯Êı
+	char *name  = get_base_name(path3);
+	printf("%s\n", name);
 
-//	æµ‹è¯•get_base_name()å‡½æ•°
-	// char *name  = get_base_name(path1);
-	// printf("%s", name);
+//	²âÊÔget_extension()º¯Êı
+	char *extension = get_extension(path3);
+	printf("%s\n", extension);
 
-//	æµ‹è¯•get_extension()å‡½æ•°
-	// char *extension = get_extension(path1);
-	// printf("%s", extension);
+//	²âÊÔget_file_size()º¯Êı
+	long int size  = get_file_size(path3);
+	printf("%ld\n", size);
 
-//	æµ‹è¯•get_file_size()å‡½æ•°
-//	long int size  = get_file_size(path1);
-//	printf("%ld", size);
+//	²âÊÔget_file_status()º¯Êı
+	// get_file_status(path3);
 
-//	æµ‹è¯•get_file_status()å‡½æ•°
-//	get_file_status(path1);
+//	²âÊÔfile_exsists()º¯Êı
+	printf("%d\n", file_exsists(path3));
 
-//	æµ‹è¯•file_exsists()å‡½æ•°
-//	printf("%d %d", file_exsists(path1), file_exsists(path2));
+//	²âÊÔfolder_exsists()º¯Êı
+	printf("%d\n", folder_exsists(path3));
 
-//	æµ‹è¯•folder_exsists()å‡½æ•°
-//	printf("%d %d", folder_exsists(path1), folder_exsists(path2));
-
-//	æµ‹è¯•get_dir()å‡½æ•°
-	// printf("%s", get_dir(path1));
+//	²âÊÔget_dir()º¯Êı
+	printf("%s\n", get_dir(path3));
 
 
-//	æµ‹è¯•create_info_node()å‡½æ•°
-	FileInfo * head =  create_info_node(path2);
-	printf("type: %d\n", head->type);
-	printf("basename: %s\n", head->baseName);
-	printf("path: %s\n", head->path);
-	printf("timeNum:  %ld\n", head->modifyTimeNum);
-	printf("time: %s\n", head->modifyTime);
-	printf("size: %ld\n", head->size);
-	printf("extension: %s\n", head->extension);
-	printf("innerFileNum: %d\n", head->innerFileNum);
+//	²âÊÔcreate_info_node()º¯Êı
+	// FileInfo * head =  create_info_node(path3);
+	// printf("type: %d\n", head->type);
+	// printf("basename: %s\n", head->baseName);
+	// printf("path: %s\n", head->path);
+	// printf("timeNum:  %ld\n", head->modifyTimeNum);
+	// printf("time: %s\n", head->modifyTime);
+	// printf("size: %ld\n", head->size);
+	// printf("extension: %s\n", head->extension);
+	// printf("innerFileNum: %d\n", head->innerFileNum);
 
 	system("pause");
 	return 0;

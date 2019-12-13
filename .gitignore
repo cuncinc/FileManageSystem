@@ -1,5 +1,5 @@
 test.c
-tst.c.exe
+test.c.exe
 .vscode
 a.exe
 CommandLine.c
@@ -8,3 +8,9 @@ test.txt
 test2.c.exe
 Song.c
 test_NodeOpe.c.exe
+list.c
+list.c.exe
+testTerminal.c
+testTerminal.c.exe
+testCommandLine.c
+cyq(test).cpp
