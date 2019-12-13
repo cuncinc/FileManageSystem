@@ -55,28 +55,50 @@ char **get_inner_pathes(FileInfo *info)
 FilesBiTree create_files_bitree(char *path)
 {
 	FilesBiTree root = (FilesBiTree) malloc (sizeof(FileNode));
-	if(root == NULL) //若分配空间失败 
+	if(root == NULL   ) //若分配空间失败 
 	{
-		return NULL;\
-	 } 
- 
+		return NULL;
+	}	  
 	root->info = create_info_node(path); //获取文件信息
-
-	char **p = get_inner_pathes(root->info);  //获取文件夹内的文件路径 
+	if(root->info == NULL)  //若文件不存在，返回NULL 
+	{
+		free(root);
+		return NULL;  
+	}
+	if(file == root->info->type) //如果是文件 
+	{
+		root->lch = NULL;
+	}
 	
-
-//	int i;
-//	for (i=0; i<root->info->innerFileNum; ++i)
-//	{
-//		
-//		printf("%s\n", p[i]);
-//	}
-
-	return root;
+	else //如果是文件夹 
+	{
+		char **p = get_inner_pathes(root->info);  //获取文件夹内的文件路径 	
+		root->lch = create_files_bitree(p[0]); //左子结点为目录下的第一个 文件
+		FilesBiTree pointer = root->lch;
+		int i;
+		for(  i = 1; i < root->info->innerFileNum; i++)
+		{
+			pointer->rch = create_files_bitree(p[i]); //右子结点为目录下的后面文件	
+			pointer = pointer->rch;
+		} 
+		pointer->rch = NULL;
+	}
+	root->rch = NULL;
+	return root; 
+ 
+	
 }	
  
 
-
+void pre_order(FilesBiTree root)
+{
+	if(root == NULL)
+		return ;
+	printf("%s\n", root->info->baseName);
+	
+	pre_order(root->lch);	
+	pre_order(root->rch);
+} 
 
 
 
