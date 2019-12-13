@@ -1,7 +1,7 @@
 /*
- * Author: å®‹æ·³
- * Time: 2019å¹´12æœˆ6æ—¥ 12ç‚¹26åˆ†
- * æè¿°ï¼šå®šä¹‰äº†èŠ‚ç‚¹ã€æ ‘çš„ç»“æ„ä½“
+ * Author: ËÎ´¾
+ * Time: 2019Äê12ÔÂ6ÈÕ 12µã26·Ö
+ * ÃèÊö£º¶¨ÒåÁË½Úµã¡¢Ê÷µÄ½á¹¹Ìå
  */
 
 #ifndef NODEINFO_H
@@ -9,28 +9,28 @@
 
 enum NodeType
 {
-    folder,  //folderæ˜¯0
-    file    //fileæ˜¯1
+    folder,  //folderÊÇ0
+    file    //fileÊÇ1
 };
 
 struct FileInfo
 {
-    enum NodeType type; //èŠ‚ç‚¹å­˜å‚¨çš„ç±»å‹ï¼Œfolderå’Œfile
-    char * path;        //æ–‡ä»¶(å¤¹)ç»å¯¹è·¯å¾„åã€‚å¦‚Cç›˜Userç›®å½•çš„test.txtå­˜ä¸º"C:\\User\\test.txt"
-    char * baseName;    //æ–‡ä»¶(å¤¹)çš„åå­—ï¼Œæ–‡ä»¶ååŒ…å«æ‹“å±•å
-    long modifyTimeNum; //ä»1970å¹´åˆ°ç°åœ¨çš„ç§’æ•°(æˆ–è€…æ¯«ç§’)ï¼Œä¾¿äºæ’åº   //å‘½åæœ‰ç‚¹ä¸è§„èŒƒ
-    char *modifyTime;   //ç”¨å­—ç¬¦ä¸²å­˜å‚¨çš„æ—¶é—´   //éœ€çº¦å®šæ ¼å¼
-    long size;          //æ–‡ä»¶(å¤¹)å¤§å°ï¼Œå•ä½æ˜¯å­—èŠ‚ã€‚æ–‡ä»¶ä¸ºå…¶æœ¬èº«å¤§å°ï¼›æ–‡ä»¶å¤¹ä¸ºé‡Œé¢æ‰€æœ‰æ–‡ä»¶çš„æ€»å¤§å°
-    char *extension;    //ä»…fileæœ‰æ•ˆã€‚æ–‡ä»¶çš„æ‹“å±•(åç¼€)åï¼Œç”¨äºæ’åºï¼Œæˆ–è€…GUIæ˜¾ç¤ºä¸åŒçš„å›¾æ ‡ï¼Œæ²¡æœ‰åˆ™è®¾ä¸ºNULL
-    int innerFileNum;   //ä»…folderæœ‰æ•ˆã€‚æ­¤æ–‡ä»¶å¤¹é‡Œè¿™ä¸€å±‚çš„æ–‡ä»¶(å¤¹)æ•°é‡ï¼Œç©ºåˆ™è®¾ä¸º0ã€‚è‹¥æ˜¯æ–‡ä»¶ç±»å‹åˆ™è®¾ä¸º-1
+    enum NodeType type; //½Úµã´æ´¢µÄÀàĞÍ£¬folderºÍfile
+    char * path;        //ÎÄ¼ş(¼Ğ)¾ø¶ÔÂ·¾¶Ãû¡£
+    char *extension;    //>>½öfileÓĞĞ§<<¡£ÎÄ¼şµÄÍØÕ¹(ºó×º)Ãû£¬ÓÃÓÚÅÅĞò£¬»òÕßGUIÏÔÊ¾²»Í¬µÄÍ¼±ê£¬Ã»ÓĞÔòÉèÎªNULL
+    char * baseName;    //ÎÄ¼ş(¼Ğ)µÄÃû×Ö£¬ÎÄ¼şÃû°üº¬ÍØÕ¹Ãû
+    char *modifyTime;   //ÓÃ×Ö·û´®´æ´¢µÄÊ±¼ä
+    long modifyTimeNum; //´Ó1970Äêµ½ÏÖÔÚµÄÃëÊı(»òÕßºÁÃë)£¬±ãÓÚÅÅĞò
+    long size;          //ÎÄ¼ş(¼Ğ)´óĞ¡£¬µ¥Î»ÊÇ×Ö½Ú¡£ÎÄ¼şÎªÆä±¾Éí´óĞ¡£»ÎÄ¼ş¼ĞÎªÀïÃæËùÓĞÎÄ¼şµÄ×Ü´óĞ¡
+    int innerFileNum;   //>>½öfolderÓĞĞ§<<¡£´ËÎÄ¼ş¼ĞÀïÕâÒ»²ãµÄÎÄ¼ş(¼Ğ)ÊıÁ¿£¬¿ÕÔòÉèÎª0¡£ÈôÊÇÎÄ¼şÀàĞÍÔòÉèÎª-1
 };
 typedef struct FileInfo FileInfo;
 
 struct FileNode
 {
     struct FileInfo * info;
-    struct FileNode * lch;  //å·¦å­©å­    //å‘½åä¸è§„èŒƒ
-    struct FileNode * rch;  //å³å­©å­    //å‘½åä¸è§„èŒƒ
+    struct FileNode * lch;  //×óº¢×Ó
+    struct FileNode * rch;  //ÓÒº¢×Ó
 };
 typedef struct FileNode FileNode;
 typedef struct FileNode *FilesBiTree;

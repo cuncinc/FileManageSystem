@@ -83,20 +83,20 @@ char * get_base_name(char * path)
 	}
 	name[j] = '\0';
 
-	// printf("%s\n%s\n", path, name);
+	// 以下是去掉后缀名的代码，不需要使用
 
-	if(file_exsists(path))  //如果是文件则祛除后缀名
-	{
-		for(i=strlen(name); i>=0 && name[i]!='.'; i--)
-		{
-			;	//空语句
-		}
+	// if(file_exsists(path))  //如果是文件则祛除后缀名
+	// {
+	// 	for(i=strlen(name); i>=0 && name[i]!='.'; i--)
+	// 	{
+	// 		;	//空语句
+	// 	}
 
-		if ( -1!=i || 0!=i  )	//排除文件名没有'.'的文件以及如".gitignore"的隐藏文件
-		{
-			name[i] = '\0';
-		}
-	}
+	// 	if ( -1!=i || 0!=i  )	//排除文件名没有'.'的文件以及如".gitignore"的隐藏文件
+	// 	{
+	// 		name[i] = '\0';
+	// 	}
+	// }
 	char *name1 = (char *)malloc(sizeof(char) * (strlen(name)+1));
 	strcpy(name1, name);
 	free(name);
