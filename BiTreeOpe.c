@@ -1,6 +1,53 @@
 #include"BiTreeOpe.h"
 #include"NodeOpe.c"
 #include "NodeInfo.h"
+#define MAX_SPACING 15	//最大的输出间距，超过这个间距，剩余的字符就会被截断
+
+
+/* Author:宋淳
+ * 实现功能：只输出此目录下的文件(夹)的名字，按列对齐
+ */
+int list_files_name_only(FilesBiTree tree)
+{
+    FileNode *node = tree;
+    if (node->info->type != folder)     //若不是文件夹，直接退出
+    {
+        return Error;
+    }
+    if (NULL == node->lch)  //若是空文件夹，提示并退出
+    {
+        printf("空文件夹\n");
+        return OK;
+    }
+    FilesBiTree p = tree->lch;
+
+    int maxLength = 0;
+    int tempLength = 0;
+    int spacing = 0;
+
+    for (int i=0; i<(node->info->innerFileNum); ++i, p=p->rch)
+    {
+        if (maxLength < (tempLength=strlen(p->info->baseName)))
+        {
+            maxLength = tempLength;
+        }
+    }
+    //获取间隔，若字符串的最大宽度大于预设的最大宽度，则间隔为预设的最大宽度
+    spacing = maxLength < MAX_SPACING ? maxLength : MAX_SPACING;
+    p = tree->lch;  //从头开始输出
+    // printf("%d %d\n", maxLength, spacing);
+    for (int i=1; i<node->info->innerFileNum; ++i, p=p->rch)
+    {
+        print_base_name(p->info->baseName, spacing);
+        if (0 == i%4)
+        {
+            printf("\n");
+        }
+    }
+    printf("\n");
+    return OK;
+}
+
 
 // * Author: 谢文韬 Modify：宋淳
 // * 作用：返回文件目录下的所有文件名路径
