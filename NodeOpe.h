@@ -55,7 +55,7 @@ void free_tree(FilesBiTree tree);
 /*
  * 作用：前序遍历输出文件二叉树节点的name
 */
-void pre_order_in_name(FilesBiTree root)；
+void pre_order_in_name(FilesBiTree root);
 
 
 /*
