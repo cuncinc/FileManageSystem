@@ -4,16 +4,18 @@
  * 描述：要封装的操作，不对外暴露的细节
 */
 #include "NodeInfo.h"
-#include "State.h"
 #include "NodeOpe.h"
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include "State.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 //获取文件状态所需的头文件
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include<dirent.h>
+#include <dirent.h>
 
 /*
  * Author: 谢文韬
@@ -150,34 +152,6 @@ long get_file_size(char *path)
 }
 
 
-#if 0
-/*
- * Author: 宋淳  Modify:谢文韬
- * 作用：获取文件当前状态
- * 用法：参数path是文件的路径,打印出文件的相关信息
-*/
-void get_file_status(char *path)
- {
-     struct _stat buf;
-     int result;
-     //获得文件状态信息
-     result = _stat(path , &buf );
-     //显示文件状态信息
-    if( result != 0 )
-        printf( "显示文件状态信息出错" );//并提示出错的原因，如No such file or directory（无此文件或索引）
-     else
-     {
-         printf("文件大小: %ld", buf.st_size);
-         printf("\n文件创建时间: %s", ctime(&buf.st_ctime));
-         printf("访问日期: %s", ctime(&buf.st_atime));
-         printf("最后修改日期: %s", ctime(&buf.st_mtime));
-     }
-	 return;
- }
-#endif
-
-
-
 
 /*
  * Author: 谢文韬
@@ -263,6 +237,8 @@ FileInfo * create_info_node(char * path)
 	return filehead;
 }
 
+
+
 /*
  * Author：宋淳
  * 作用：在spacing个宽度下输出name，超过spacing的字符回被截断
@@ -290,6 +266,8 @@ void print_name(char *name, int spacing)
     return;
 }
 
+
+
 /*
  * Author：谢文韬
  * 作用：前序遍历输出文件二叉树节点的name
@@ -306,6 +284,8 @@ void pre_order_in_name(FilesBiTree root)
 	pre_order(root->rch);
 }
 
+
+
 /*
  * Author：宋淳
  * 作用：释放一颗树的内存
@@ -320,3 +300,51 @@ void free_tree(FilesBiTree tree)
 	free(tree);
 	return;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#if 0
+/*
+ * Author: 宋淳  Modify:谢文韬
+ * 作用：获取文件当前状态
+ * 用法：参数path是文件的路径,打印出文件的相关信息
+*/
+void get_file_status(char *path)
+ {
+     struct _stat buf;
+     int result;
+     //获得文件状态信息
+     result = _stat(path , &buf );
+     //显示文件状态信息
+    if( result != 0 )
+        printf( "显示文件状态信息出错" );//并提示出错的原因，如No such file or directory（无此文件或索引）
+     else
+     {
+         printf("文件大小: %ld", buf.st_size);
+         printf("\n文件创建时间: %s", ctime(&buf.st_ctime));
+         printf("访问日期: %s", ctime(&buf.st_atime));
+         printf("最后修改日期: %s", ctime(&buf.st_mtime));
+     }
+	 return;
+ }
+#endif

@@ -1,6 +1,10 @@
-#include"BiTreeOpe.h"
-#include"NodeOpe.c"
 #include "NodeInfo.h"
+#include "State.h"
+#include "NodeOpe.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define MAX_SPACING 15	//最大的输出间距，超过这个间距，剩余的字符就会被截断
 

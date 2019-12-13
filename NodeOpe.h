@@ -1,5 +1,8 @@
-#ifndef _NODEOPE_H
-#define _NODEOPE_H
+#ifndef NODEOPE_H
+#define NODEOPE_H
+
+#include "NodeInfo.h"
+#include "State.h"
 
 
 /*
@@ -55,12 +58,12 @@ void free_tree(FilesBiTree tree);
 void pre_order_in_name(FilesBiTree root)；
 
 
+/*
+// 这个函数好像没什么用
+ * 返回文件所在的路径
+ * 注意要用动态内存
+ */
+char * get_dir(char * path);
 
 
-//这个函数好像没什么用
-// /*
-//  * 返回文件所在的路径
-//  * 注意要用动态内存
-//  */
-// char * get_dir(char * path);
 #endif

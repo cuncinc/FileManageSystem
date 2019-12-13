@@ -3,7 +3,7 @@
 //测试BiTreeOpe.c文件中函数的正确性
 
 
-#include"BiTreeOpe.c"
+#include "BiTreeOpe.c"
 
 
 int main()

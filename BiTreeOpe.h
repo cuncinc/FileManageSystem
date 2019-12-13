@@ -221,4 +221,14 @@ void sort_files_in_path(char *path);
 */
 FilesBiTree create_blising_tree(char *path);
 
+
+
+/*
+ * 作用：返回文件目录下的所有文件名路径
+ * 用法：参数path是文件的绝对路径，path不存在返回NULL
+*/
+char **get_inner_pathes(FileInfo *info)
+
+
+
 #endif

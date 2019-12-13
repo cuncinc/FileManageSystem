@@ -10,7 +10,7 @@
 enum NodeType
 {
     folder,  //folder «0
-    file    //file «1
+    file     //file «1
 };
 
 struct FileInfo
