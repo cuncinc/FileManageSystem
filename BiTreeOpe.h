@@ -216,6 +216,9 @@ int move_file_in_path(char *destPath, char *sourcePath);
 void sort_files(FilesBiTree tree, char *ordering);
 void sort_files_in_path(char *path);
 
-
+/*
+ * 功能：只建立path文件夹下的同一层的兄弟二叉树(退化为链表)
+*/
+FilesBiTree create_blising_tree(char *path);
 
 #endif

@@ -7,8 +7,8 @@ int main()
 	char *path1 = "E:\\CC\\Code\\VSCode\\Default\\Data structure\\FMS\\test_NodeOpe.c"; //文件
 	char *path2 = "E:\\CC\\Code\\VSCode\\Default\\Data structure\\FMS"; //文件??
 	char *path3 = "E:\\CC\\Code\\From_GitHub\\Xin-Yue\\现场?_?我所亲历的邓同学被约谈事件.png";
-// 测试get_base_name()函数
-	char *name  = get_base_name(path3);
+// 测试get_name()函数
+	char *name  = get_name(path3);
 	printf("%s\n", name);
 
 //	测试get_extension()函数
@@ -35,7 +35,7 @@ int main()
 //	测试create_info_node()函数
 	// FileInfo * head =  create_info_node(path3);
 	// printf("type: %d\n", head->type);
-	// printf("basename: %s\n", head->baseName);
+	// printf("name: %s\n", head->name);
 	// printf("path: %s\n", head->path);
 	// printf("timeNum:  %ld\n", head->modifyTimeNum);
 	// printf("time: %s\n", head->modifyTime);

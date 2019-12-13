@@ -3,12 +3,10 @@
 
 
 /*
- * 字符串操作，从路径种返回文件基本名(除了拓展名的字符串)
- * 如C:\\test.txt返回test
- * 注意要用动态内存
+ * 作用：返回文件(夹)名，从最后一个'\'开始到末尾
+ * 用法：参数path是文件的绝对路径，文件不存在返回NULL
  */
-char * get_base_name(char * path);
-
+char * get_name(char * path);
 
 
 /*
@@ -17,13 +15,11 @@ char * get_base_name(char * path);
 char * get_extension(char *path);
 
 
-
 /*
  * 作用：返回文件的大小，单位为Byte(字节)
  * 用法：参数str是文件的路径，文件不存在返回-1
  */
 long get_file_size(char *str);
-
 
 
 /*
@@ -35,18 +31,28 @@ long get_file_size(char *str);
 FileInfo * create_info_node(char *path);
 
 
-
 boolean is_file_node(FileNode *node);    //如果节点寸的是文件则返回true，否则返回false
 boolean is_folder_node(FileNode *node);  //是文件夹则返回true，否则返回false
 boolean file_exsists(char *path);   //若path不存在或者是文件夹，返回false
 boolean folder_exsists(char *path); //若path不存在或是文件，返回false
 
 
+/*
+ * 作用：在spacing个宽度下输出name，超过spacing的字符回被截断
+*/
+void print_name(char *name, int spacing);
+
 
 /*
- * 作用：在spacing个宽度下输出baseName，超过spacing的字符回被截断
+ * 作用：释放一颗树的内存
+ * 调用须知：调用这个函数后，要把FilesBiTree置NULL
 */
-void print_base_name(char *baseName, int spacing);
+void free_tree(FilesBiTree tree);
+
+/*
+ * 作用：前序遍历输出文件二叉树节点的name
+*/
+void pre_order_in_name(FilesBiTree root)；
 
 
 
@@ -57,8 +63,4 @@ void print_base_name(char *baseName, int spacing);
 //  * 注意要用动态内存
 //  */
 // char * get_dir(char * path);
-
-
-
-
 #endif

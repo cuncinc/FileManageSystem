@@ -57,11 +57,10 @@ boolean folder_exsists(char *path)
 
 /*
  * Author: 谢文韬
- * 作用：返回文件基本名的指针
+ * 作用：返回文件(夹)名，从最后一个'\'开始到末尾
  * 用法：参数path是文件的绝对路径，文件不存在返回NULL
- * bug：不能获取.gitignore之类的基本名
  */
-char * get_base_name(char * path)
+char * get_name(char * path)
 {
     if(path == NULL || 0==strlen(path))  //若路径不存在返回NULL
     {
@@ -135,7 +134,6 @@ char *get_extension(char *path)
 }
 
 
-
 /*
  * Author: 宋淳  Modify:谢文韬
  * 作用：返回文件的大小，单位为Byte(字节)
@@ -150,7 +148,6 @@ long get_file_size(char *path)
     fclose(f);
     return size;
 }
-
 
 
 #if 0
@@ -239,7 +236,7 @@ FileInfo * create_info_node(char * path)
 
 	strcpy(filehead->modifyTime, modify);
 	filehead->path = path;
-	filehead->baseName = get_base_name(path);
+	filehead->name = get_name(path);
 	if(file_exsists(path))  //如果是文件
 	{
 		filehead->type = file;
@@ -268,13 +265,13 @@ FileInfo * create_info_node(char * path)
 
 /*
  * Author：宋淳
- * 作用：在spacing个宽度下输出baseName，超过spacing的字符回被截断
+ * 作用：在spacing个宽度下输出name，超过spacing的字符回被截断
 */
-void print_base_name(char *baseName, int spacing)
+void print_name(char *name, int spacing)
 {
-    if (strlen(baseName) > spacing)
+    if (strlen(name) > spacing)
     {
-        char *p = baseName;
+        char *p = name;
         for (int i=0; i<spacing-1; ++i)
         {
             printf("%c", *p++);
@@ -283,12 +280,43 @@ void print_base_name(char *baseName, int spacing)
     }
     else
     {
-        printf("%s", baseName);
-        for (int i=strlen(baseName); i<=spacing; ++i)
+        printf("%s", name);
+        for (int i=strlen(name); i<=spacing; ++i)
         {
             printf(" ");
         }
     }
     printf("  ");
     return;
+}
+
+/*
+ * Author：谢文韬
+ * 作用：前序遍历输出文件二叉树节点的name
+*/
+void pre_order_in_name(FilesBiTree root)
+{
+	if(root == NULL)
+	{
+		return;
+	}
+	printf("%s\n", root->info->name);
+
+	pre_order(root->lch);
+	pre_order(root->rch);
+}
+
+/*
+ * Author：宋淳
+ * 作用：释放一颗树的内存
+ * 调用须知：调用这个函数后，要把FilesBiTree置NULL
+*/
+void free_tree(FilesBiTree tree)
+{
+	if (NULL == tree)
+		return;
+	free(tree->lch);
+	free(tree->rch);
+	free(tree);
+	return;
 }
