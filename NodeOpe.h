@@ -43,12 +43,22 @@ boolean folder_exsists(char *path); //若path不存在或是文件，返回false
 
 
 
+/*
+ * 作用：在spacing个宽度下输出baseName，超过spacing的字符回被截断
+*/
+void print_base_name(char *baseName, int spacing);
+
+
+
+
 //这个函数好像没什么用
 // /*
 //  * 返回文件所在的路径
 //  * 注意要用动态内存
 //  */
 // char * get_dir(char * path);
+
+
 
 
 #endif
