@@ -6,36 +6,36 @@
 #include <stdlib.h>
 #include <string.h>
 
-//»ñÈ¡ÎÄ¼þ×´Ì¬ËùÐèµÄÍ·ÎÄ¼þ
+//èŽ·å–æ–‡ä»¶çŠ¶æ€æ‰€éœ€çš„å¤´æ–‡ä»¶
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
 
 
-#define MAX_SPACING 15	//×î´óµÄÊä³ö¼ä¾à£¬³¬¹ýÕâ¸ö¼ä¾à£¬Ê£ÓàµÄ×Ö·û¾Í»á±»½Ø¶Ï
+#define MAX_SPACING 15	//æœ€å¤§çš„è¾“å‡ºé—´è·ï¼Œè¶…è¿‡è¿™ä¸ªé—´è·ï¼Œå‰©ä½™çš„å­—ç¬¦å°±ä¼šè¢«æˆªæ–­
 
 
 
 /*
- * Author: Ð»ÎÄèº Modify£ºËÎ´¾
- * ×÷ÓÃ£º·µ»ØÎÄ¼þÄ¿Â¼ÏÂµÄËùÓÐÎÄ¼þÃûÂ·¾¶
- * ÓÃ·¨£º²ÎÊýpathÊÇÎÄ¼þµÄ¾ø¶ÔÂ·¾¶£¬path²»´æÔÚ·µ»ØNULL
+ * Author: è°¢æ–‡éŸ? Modifyï¼šå®‹æ·?
+ * ä½œç”¨ï¼šè¿”å›žæ–‡ä»¶ç›®å½•ä¸‹çš„æ‰€æœ‰æ–‡ä»¶åè·¯å¾„
+ * ç”¨æ³•ï¼šå‚æ•°pathæ˜¯æ–‡ä»¶çš„ç»å¯¹è·¯å¾„ï¼Œpathä¸å­˜åœ¨è¿”å›žNULL
 */
 char **get_inner_pathes(FileInfo *info)
 {
 	int strLength;
 	char *path = info->path;
-	char **paths_arr = (char ** )malloc(sizeof(char* ) * info->innerFileNum);  //¶¯Ì¬·ÖÅäÄÚ´æ¿Õ¼ä
+	char **paths_arr = (char ** )malloc(sizeof(char* ) * info->innerFileNum);  //åŠ¨æ€åˆ†é…å†…å­˜ç©ºé—?
 	DIR *dir = opendir(path);
 	struct dirent *entry;
 	int num = 0;
-	int lenth = strlen(path); //»ñÈ¡ÎÄ¼þÂ·¾¶µÄ³¤¶È
-	if(paths_arr == NULL || dir == NULL)//ÈôpathÎª¿ÕÂ·¾¶²»´æÔÚ,»òÄÚ´æ·ÖÅäÊ§°Ü£¬·µ»ØNULL
+	int lenth = strlen(path); //èŽ·å–æ–‡ä»¶è·¯å¾„çš„é•¿åº?
+	if(paths_arr == NULL || dir == NULL)//è‹¥pathä¸ºç©ºè·¯å¾„ä¸å­˜åœ?,æˆ–å†…å­˜åˆ†é…å¤±è´¥ï¼Œè¿”å›žNULL
 	{
 		return NULL;
 	}
-	//°ÑÐ¡Ô²µãÈ¥µô
+	//æŠŠå°åœ†ç‚¹åŽ»æŽ‰
 	readdir(dir);
 	readdir(dir);
 	char **p;
@@ -55,15 +55,15 @@ char **get_inner_pathes(FileInfo *info)
 		}
 		// printf("%s:.2\n", __func__);
 		*p = tmp;
-		// ÁíÁ½¸ö¿Õ¼ä£¬Ò»¸öÊÇ\\£¬Ò»¸öÊÇ\0
-		if(*p == NULL) //¿Õ¼ä·ÖÅäÊ§°Ü£¬·µ»ØNULL
+		// å¦ä¸¤ä¸ªç©ºé—´ï¼Œä¸€ä¸ªæ˜¯\\ï¼Œä¸€ä¸ªæ˜¯\0
+		if(*p == NULL) //ç©ºé—´åˆ†é…å¤±è´¥ï¼Œè¿”å›žNULL
 		{
 			return NULL;
 		}
 		strcpy(*p, path);
 		*((*p)+lenth) = '\\';
-		// p[lenth] = '\\';  //·Ö¸ô·û
-		// strcpy(paths_arr[num]+lenth+1, entry->d_name);  //Éú³É¾ø¶ÔÂ·¾¶
+		// p[lenth] = '\\';  //åˆ†éš”ç¬?
+		// strcpy(paths_arr[num]+lenth+1, entry->d_name);  //ç”Ÿæˆç»å¯¹è·¯å¾„
 		strcpy((*p)+lenth+1, entry->d_name);
 	}
 	closedir(dir);
@@ -74,23 +74,23 @@ char **get_inner_pathes(FileInfo *info)
 
 
 /*
- * Author£ºËÎ´¾
- * ¹¦ÄÜ£ºÖ»½¨Á¢pathÎÄ¼þ¼ÐÏÂµÄÍ¬Ò»²ãµÄÐÖµÜ¶þ²æÊ÷(ÍË»¯ÎªÁ´±í)
+ * Authorï¼šå®‹æ·?
+ * åŠŸèƒ½ï¼šåªå»ºç«‹pathæ–‡ä»¶å¤¹ä¸‹çš„åŒä¸€å±‚çš„å…„å¼ŸäºŒå‰æ ?(é€€åŒ–ä¸ºé“¾è¡¨)
 */
 FilesBiTree create_blising_tree(char *path)
 {
 	FilesBiTree root = (FilesBiTree) malloc (sizeof(FileNode));
 	FileNode *node = root;
 	if( node == NULL ||  NULL == path || 0==strlen(path)
-	  ||  (!file_exsists(path) && !folder_exsists(path))) //Èô·ÖÅä¿Õ¼äÊ§°Ü
+	  ||  (!file_exsists(path) && !folder_exsists(path))) //è‹¥åˆ†é…ç©ºé—´å¤±è´?
 	{
 		return NULL;
 	}
 	node->rch = NULL;
-	node->info = create_info_node(path); //»ñÈ¡ÎÄ¼þÐÅÏ¢
+	node->info = create_info_node(path); //èŽ·å–æ–‡ä»¶ä¿¡æ¯
 	int fileNum = node->info->innerFileNum;
 
-	char **p = get_inner_pathes(node->info);  //»ñÈ¡ÎÄ¼þ¼ÐÄÚµÄÎÄ¼þÂ·¾¶
+	char **p = get_inner_pathes(node->info);  //èŽ·å–æ–‡ä»¶å¤¹å†…çš„æ–‡ä»¶è·¯å¾?
 
 	int i;
 	node->lch = (FilesBiTree) malloc (sizeof(FileNode));
@@ -99,21 +99,21 @@ FilesBiTree create_blising_tree(char *path)
 	node->lch = NULL;
 	for(i = 1; i < fileNum; ++i)
 	{
-		node->rch = (FilesBiTree) malloc (sizeof(FileNode)); //ÓÒ×Ó½áµãÎªÄ¿Â¼ÏÂµÄºóÃæÎÄ¼þ
+		node->rch = (FilesBiTree) malloc (sizeof(FileNode)); //å³å­ç»“ç‚¹ä¸ºç›®å½•ä¸‹çš„åŽé¢æ–‡ä»?
 		node = node->rch;
 		node->lch = NULL;
 		node->info = create_info_node(p[i]);
 	}
-	node->rch = NULL;	//µ½ÁË×îºóÒ»¸öÓÒº¢×Ó
+	node->rch = NULL;	//åˆ°äº†æœ€åŽä¸€ä¸ªå³å­©å­
 	return root;
 }
 
 
 
 /*
- * Author: Ð»ÎÄèº  Modify:ËÎ´¾
- * ×÷ÓÃ£º·µ»ØÎÄ¼þÄ¿Â¼¶þ²æÊ÷µÄ¸ù½Úµã
- * ÓÃ·¨£º²ÎÊýpathÊÇÎÄ¼þµÄ¾ø¶ÔÂ·¾¶£¬path²»´æÔÚ·µ»ØNULL
+ * Author: è°¢æ–‡éŸ?  Modify:å®‹æ·³
+ * ä½œç”¨ï¼šè¿”å›žæ–‡ä»¶ç›®å½•äºŒå‰æ ‘çš„æ ¹èŠ‚ç‚¹
+ * ç”¨æ³•ï¼šå‚æ•°pathæ˜¯æ–‡ä»¶çš„ç»å¯¹è·¯å¾„ï¼Œpathä¸å­˜åœ¨è¿”å›žNULL
  */
 FilesBiTree create_files_bitree(char *path)
 {
@@ -122,36 +122,36 @@ FilesBiTree create_files_bitree(char *path)
 	{
 		return NULL;
 	}
-	root->info = create_info_node(path); //»ñÈ¡ÎÄ¼þÐÅÏ¢
+	root->info = create_info_node(path); //èŽ·å–æ–‡ä»¶ä¿¡æ¯
 
-	if(root->info == NULL)  //ÈôÎÄ¼þ²»´æÔÚ£¬·µ»ØNULL
+	if(root->info == NULL)  //è‹¥æ–‡ä»¶ä¸å­˜åœ¨ï¼Œè¿”å›žNULL
 	{
 		free(root);
 		return NULL;
 	}
 
-	if(file == root->info->type) //Èç¹ûÊÇÎÄ¼þ
+	if(file == root->info->type) //å¦‚æžœæ˜¯æ–‡ä»?
 	{
 		root->lch = NULL;
 	}
-	else //Èç¹ûÊÇÎÄ¼þ¼Ð
+	else //å¦‚æžœæ˜¯æ–‡ä»¶å¤¹
 	{
-		if (-2 == root->info->innerFileNum || 0==root->info->innerFileNum)	//ÈôÎª¿ÕÎÄ¼þ¼Ð
+		if (0 == root->info->innerFileNum)	//è‹¥ä¸ºç©ºæ–‡ä»¶å¤¹
 		{
 			root->lch = NULL;
 			return root;
 		}
-		char **p = get_inner_pathes(root->info);  //»ñÈ¡ÎÄ¼þ¼ÐÄÚµÄÎÄ¼þÂ·¾¶
+		char **p = get_inner_pathes(root->info);  //èŽ·å–æ–‡ä»¶å¤¹å†…çš„æ–‡ä»¶è·¯å¾?
 
-		root->lch = create_files_bitree(p[0]); //×ó×Ó½áµãÎªÄ¿Â¼ÏÂµÄµÚÒ»¸ö ÎÄ¼þ
+		root->lch = create_files_bitree(p[0]); //å·¦å­ç»“ç‚¹ä¸ºç›®å½•ä¸‹çš„ç¬¬ä¸€ä¸? æ–‡ä»¶
 		FilesBiTree pointer = root->lch;
 		int i;
 		for(i = 1; i < root->info->innerFileNum; i++)
 		{
-			pointer->rch = create_files_bitree(p[i]); //ÓÒ×Ó½áµãÎªÄ¿Â¼ÏÂµÄºóÃæÎÄ¼þ
+			pointer->rch = create_files_bitree(p[i]); //å³å­ç»“ç‚¹ä¸ºç›®å½•ä¸‹çš„åŽé¢æ–‡ä»?
 			pointer = pointer->rch;
 		}
-		pointer->rch = NULL;	//µ½ÁË×îºóÒ»¸öÓÒº¢×Ó
+		pointer->rch = NULL;	//åˆ°äº†æœ€åŽä¸€ä¸ªå³å­©å­
 	}
 	root->rch = NULL;
 	return root;
@@ -160,19 +160,19 @@ FilesBiTree create_files_bitree(char *path)
 
 
 /*
- * Author:ËÎ´¾
- * ÊµÏÖ¹¦ÄÜ£ºÖ»Êä³ö´ËÄ¿Â¼ÏÂµÄÎÄ¼þ(¼Ð)µÄÃû×Ö£¬°´ÁÐ¶ÔÆë
+ * Author:å®‹æ·³
+ * å®žçŽ°åŠŸèƒ½ï¼šåªè¾“å‡ºæ­¤ç›®å½•ä¸‹çš„æ–‡ä»?(å¤?)çš„åå­—ï¼ŒæŒ‰åˆ—å¯¹é½
  */
 int list_files_name_only(FilesBiTree tree)
 {
     FileNode *node = tree;
-    if (node->info->type != folder)     //Èô²»ÊÇÎÄ¼þ¼Ð£¬Ö±½ÓÍË³ö
+    if (node->info->type != folder)     //è‹¥ä¸æ˜¯æ–‡ä»¶å¤¹ï¼Œç›´æŽ¥é€€å‡?
     {
         return Error;
     }
-    if (NULL == node->lch)  //ÈôÊÇ¿ÕÎÄ¼þ¼Ð£¬ÌáÊ¾²¢ÍË³ö
+    if (NULL == node->lch)  //è‹¥æ˜¯ç©ºæ–‡ä»¶å¤¹ï¼Œæç¤ºå¹¶é€€å‡?
     {
-        printf("¿ÕÎÄ¼þ¼Ð\n");
+        printf("ç©ºæ–‡ä»¶å¤¹\n");
         return OK;
     }
     FilesBiTree p = tree->lch;
@@ -188,9 +188,9 @@ int list_files_name_only(FilesBiTree tree)
             maxLength = tempLength;
         }
     }
-    //»ñÈ¡¼ä¸ô£¬Èô×Ö·û´®µÄ×î´ó¿í¶È´óÓÚÔ¤ÉèµÄ×î´ó¿í¶È£¬Ôò¼ä¸ôÎªÔ¤ÉèµÄ×î´ó¿í¶È
+    //èŽ·å–é—´éš”ï¼Œè‹¥å­—ç¬¦ä¸²çš„æœ€å¤§å®½åº¦å¤§äºŽé¢„è®¾çš„æœ€å¤§å®½åº¦ï¼Œåˆ™é—´éš”ä¸ºé¢„è®¾çš„æœ€å¤§å®½åº?
     spacing = maxLength < MAX_SPACING ? maxLength : MAX_SPACING;
-    p = tree->lch;  //´ÓÍ·¿ªÊ¼Êä³ö
+    p = tree->lch;  //ä»Žå¤´å¼€å§‹è¾“å‡?
     // printf("%d %d\n", maxLength, spacing);
 
     for (i=1; i<node->info->innerFileNum; ++i, p=p->rch)
@@ -208,8 +208,8 @@ int list_files_name_only(FilesBiTree tree)
 
 
 /*
- * Author£ºËÎ´¾
- * ×÷ÓÃ£ºÖ»Êä³ö´ËÄ¿Â¼ÏÂµÄÎÄ¼þ(¼Ð)µÄÃû×Ö£¬°´ÁÐ¶ÔÆë
+ * Authorï¼šå®‹æ·?
+ * ä½œç”¨ï¼šåªè¾“å‡ºæ­¤ç›®å½•ä¸‹çš„æ–‡ä»?(å¤?)çš„åå­—ï¼ŒæŒ‰åˆ—å¯¹é½
 */
 int list_files_name_only_in_path(char *path)
 {
@@ -219,63 +219,3 @@ int list_files_name_only_in_path(char *path)
     return OK;
 }
 
-
-//´«ÈëÂ·¾¶£¬¶¨Î»µ½Ê÷½áµã
-FileNode *locate_node(char *path, FilesBiTree root)
-{
-	if(root == NULL || path == NULL) //Èç¹ûÂ·¾¶²»´æÔÚ»òÕß¸ù½Úµã²»´æÔÚ£¬·µ»ØNULL
-	{
-		return NULL;
-	}
-	if(strcmp(path, root->info->path) == 0 && root->info->type == folder)
-	{
-		return root;
-	}
-
-	FileNode *node1 =  locate_node(path,root->rch);
-	if(node1 != NULL)
-		return node1;
-	FileNode *node2	= locate_node(path, root->lch);
-	if(node2 != NULL)
-		return node2;
-	return NULL;
-}
-
-
-int copy_folder(char *destPath, FileNode *sourceNode, FilesBiTree root)
-{
-	if(file_exsists(destPath) || sourceNode == NULL || root == NULL || destPath == NULL) //Èç¹û´ý¸´ÖÆÂ·¾¶ÎªÎÄ¼þ»òÆäËûÒì³£
-	{
-		return Error;
-	}
-	FilesBiTree cloneSourceNode = (FilesBiTree)malloc(sizeof(FileNode));
-	if(cloneSourceNode == NULL) //Èô·ÖÅäÄÚ´æ¿Õ¼äÊ§°Ü
-	{
-		return Error;
-	}
-	// ¼æÈÝÐÔ²»ºÃ£¬²»Í¬µÄÖÕ¶ËÓÐ²»Í¬µÄÃüÁî
-	// // ´´½¨ÃüÁî
-	// char command[300];
-	// char *p = command;
-	// strcpy(p, "copy ");
-	// p += strlen("copy ");
-	// strcpy(p, sourceNode->info->path);
-	// p += strlen(sourceNode->info->path);
-	// strcpy(p, destPath);
-	// p +=strlen(destPath);
-	// *p = '\0';
-	// printf("%s\n", command);
-	// system(command);	//Ö´ÐÐÏµÍ³µÄcpº¯Êý
-
-	cloneSourceNode = create_files_bitree(sourceNode->info->path);
-	if(cloneSourceNode == NULL) //Èô·ÖÅäÄÚ´æ¿Õ¼äÊ§°Ü
-	{
-		return Error;
-	}
-	FileNode *destNode = locate_node(destPath, root);  //¶¨Î»µ½´ý¸´ÖÆµÄ½áµã
-
-	//ÓÃÍ·²å·¨
-	cloneSourceNode->rch = destNode->lch;
-	destNode->lch = cloneSourceNode;
-	return OK;
-}
