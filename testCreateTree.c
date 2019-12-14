@@ -13,7 +13,7 @@ int main()
 	char *path3 = "E:\\CC\\Code\\From_GitHub\\Xin-Yue";
 	//²âÊÔcreate_fil es_bitree()º¯Êı
 	FilesBiTree head = create_files_bitree(path3);
- 	pre_order(head);
+ 	pre_order_in_name(head);
 
 	system("pause");
 	return 0;

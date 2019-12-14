@@ -14,3 +14,6 @@ testTerminal.c
 testTerminal.c.exe
 testCommandLine.c
 cyq(test).cpp
+test.exe
+test*.c
+testCreateTree.c

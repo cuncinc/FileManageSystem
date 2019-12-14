@@ -248,7 +248,8 @@ void print_name(char *name, int spacing)
     if (strlen(name) > spacing)
     {
         char *p = name;
-        for (int i=0; i<spacing-1; ++i)
+        int i;
+        for (i=0; i<spacing-1; ++i)
         {
             printf("%c", *p++);
         }
@@ -257,7 +258,8 @@ void print_name(char *name, int spacing)
     else
     {
         printf("%s", name);
-        for (int i=strlen(name); i<=spacing; ++i)
+        int i;
+        for (i=strlen(name); i<=spacing; ++i)
         {
             printf(" ");
         }
@@ -280,8 +282,8 @@ void pre_order_in_name(FilesBiTree root)
 	}
 	printf("%s\n", root->info->name);
 
-	pre_order(root->lch);
-	pre_order(root->rch);
+	pre_order_in_name(root->lch);
+	pre_order_in_name(root->rch);
 }
 
 

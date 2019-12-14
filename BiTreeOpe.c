@@ -6,6 +6,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+//获取文件状态所需的头文件
+#include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
+
+
 #define MAX_SPACING 15	//最大的输出间距，超过这个间距，剩余的字符就会被截断
 
 
@@ -161,8 +168,8 @@ int list_files_name_only(FilesBiTree tree)
     int maxLength = 0;
     int tempLength = 0;
     int spacing = 0;
-
-    for (int i=0; i<(node->info->innerFileNum); ++i, p=p->rch)
+	int i;
+    for (i=0; i<(node->info->innerFileNum); ++i, p=p->rch)
     {
         if (maxLength < (tempLength=strlen(p->info->name)))
         {
@@ -173,7 +180,8 @@ int list_files_name_only(FilesBiTree tree)
     spacing = maxLength < MAX_SPACING ? maxLength : MAX_SPACING;
     p = tree->lch;  //从头开始输出
     // printf("%d %d\n", maxLength, spacing);
-    for (int i=1; i<node->info->innerFileNum; ++i, p=p->rch)
+
+    for (i=1; i<node->info->innerFileNum; ++i, p=p->rch)
     {
         print_name(p->info->name, spacing);
         if (0 == i%4)
