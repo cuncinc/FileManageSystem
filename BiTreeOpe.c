@@ -93,7 +93,6 @@ FilesBiTree create_blising_tree(char *path)
 	char **p = get_inner_pathes(node->info);  //获取文件夹内的文件路径
 
 	int i;
-	char **q;
 	node->lch = (FilesBiTree) malloc (sizeof(FileNode));
 	node = node->lch;
 	node->info = create_info_node(p[0]);
@@ -137,7 +136,7 @@ FilesBiTree create_files_bitree(char *path)
 	}
 	else //如果是文件夹
 	{
-		if (0 == root->info->innerFileNum)	//若为空文件夹
+		if (-2 == root->info->innerFileNum || 0==root->info->innerFileNum)	//若为空文件夹
 		{
 			root->lch = NULL;
 			return root;
@@ -218,4 +217,65 @@ int list_files_name_only_in_path(char *path)
     list_files_name_only(blisingTree);
 	free_tree(blisingTree);
     return OK;
+}
+
+
+//传入路径，定位到树结点
+FileNode *locate_node(char *path, FilesBiTree root)
+{
+	if(root == NULL || path == NULL) //如果路径不存在或者根节点不存在，返回NULL
+	{
+		return NULL;
+	}
+	if(strcmp(path, root->info->path) == 0 && root->info->type == folder)
+	{
+		return root;
+	}
+
+	FileNode *node1 =  locate_node(path,root->rch);
+	if(node1 != NULL)
+		return node1;
+	FileNode *node2	= locate_node(path, root->lch);
+	if(node2 != NULL)
+		return node2;
+	return NULL;
+}
+
+
+int copy_folder(char *destPath, FileNode *sourceNode, FilesBiTree root)
+{
+	if(file_exsists(destPath) || sourceNode == NULL || root == NULL || destPath == NULL) //如果待复制路径为文件或其他异常
+	{
+		return Error;
+	}
+	FilesBiTree cloneSourceNode = (FilesBiTree)malloc(sizeof(FileNode));
+	if(cloneSourceNode == NULL) //若分配内存空间失败
+	{
+		return Error;
+	}
+	// 兼容性不好，不同的终端有不同的命令
+	// // 创建命令
+	// char command[300];
+	// char *p = command;
+	// strcpy(p, "copy ");
+	// p += strlen("copy ");
+	// strcpy(p, sourceNode->info->path);
+	// p += strlen(sourceNode->info->path);
+	// strcpy(p, destPath);
+	// p +=strlen(destPath);
+	// *p = '\0';
+	// printf("%s\n", command);
+	// system(command);	//执行系统的cp函数
+
+	cloneSourceNode = create_files_bitree(sourceNode->info->path);
+	if(cloneSourceNode == NULL) //若分配内存空间失败
+	{
+		return Error;
+	}
+	FileNode *destNode = locate_node(destPath, root);  //定位到待复制的结点
+
+	//用头插法
+	cloneSourceNode->rch = destNode->lch;
+	destNode->lch = cloneSourceNode;
+	return OK;
 }

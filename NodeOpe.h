@@ -67,5 +67,9 @@ void pre_order_in_path(FilesBiTree root);
  */
 char * get_dir(char * path);
 
+/*
+ * 描述：传入Byte大小，获取合适单位的大小
+*/
+char *get_size_string(long size);
 
 #endif

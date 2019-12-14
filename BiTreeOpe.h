@@ -187,8 +187,10 @@ int copy_file(char * destPath, FileNode *node);
  *      1. 判断node是否为目录
  *      2.
 */
-int copy_folder(char *destPath, FileNode *node);
+int copy_folder(char *destPath, FileNode *sourceNode, FilesBiTree root)
 
+//传入路径，定位到树结点
+FileNode *locate_node(char *path, FilesBiTree root);
 
 
 /*

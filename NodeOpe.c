@@ -286,6 +286,9 @@ FileInfo * create_info_node(char * path)
     	DIR * dir = NULL;
     	dir = opendir(path);
 		// printf("%s:folder_2\n", __func__);
+		//去掉小圆点
+		readdir(dir);
+		readdir(dir);
 		while((entry = readdir(dir)) != 0)
 		{
 			++filenum;  //文件数目加加
@@ -293,7 +296,7 @@ FileInfo * create_info_node(char * path)
 		// printf("filenum = %d\n", filenum);
 		// printf("%s:folder_3\n", __func__);
 		closedir(dir);
-		infoNode->innerFileNum = filenum - 2;
+		infoNode->innerFileNum = filenum;
 		// printf("%s:folder_end\n", __func__);
 	}
 	// printf("%s:end\n", __func__);
@@ -379,7 +382,89 @@ void free_tree(FilesBiTree tree)
 	return;
 }
 
+/*
+ * Author：宋淳
+ * 描述：传入Byte大小，获取合适单位的大小
+ * 如果不保存，只输出，调用一个就free一个
+*/
+char *get_size_string(long size)
+{
+	int unit;	//标记单位
+	long dSize;
+	long long gb = 1024 *1024 *1024 * 1024;	//直接使用会溢出
+	if (size<=0)
+	{
+		char *string = (char *)malloc(sizeof(char) *2);
+		string[0] = '0';
+		string[1] = '\0';
+		return string;
+	}
 
+	if (size < 1024)
+	{
+		dSize = size * 100;
+		unit = 1;
+	}
+	else if (size < 1024 *1024)
+	{
+		dSize = size / 1024.0 * 100;
+		unit = 2;
+	}
+	else if (size < 1024 * 1024 *1024)
+	{
+		dSize = size / 1024.0 / 1024.0 * 100;
+		unit = 3;
+	}
+	else if (size < gb)
+	{
+		dSize = size / 1024.0 / 1024.0 / 1024.0 * 100;
+		unit = 4;
+	}
+
+	int cnt = 0;	//标记size的位数
+	long num = dSize;
+	char str[20] = {'\0'};	//把long转为char的中转
+	while (num!=0)
+	{
+		str[cnt++] = (int)(num%10) + '0';
+		num /= 10;
+	}
+	char *string = (char *)malloc(sizeof(char) * (cnt+5));
+	char *p = string;
+
+	while (cnt>=0)
+	{
+		if (2 == cnt)
+		{
+			*p++ = '.';
+			*p++ = str[--cnt];
+			continue;
+		}
+		*p++ = str[--cnt];
+	}
+	*(p-1) = ' ';
+	if (1 == unit)
+	{
+		strcpy(p, "Byte");
+		p[4] = '\0';
+	}
+	else if (2 == unit)
+	{
+		strcpy(p, "KB");
+		p[2] = '\0';
+	}
+	else if (3 == unit)
+	{
+		strcpy(p, "MB");
+		p[2] = '\0';
+	}
+	else if (4 == unit)
+	{
+		strcpy(p, "GB");
+		p[2] = '\0';
+	}
+	return string;
+}
 
 
 
