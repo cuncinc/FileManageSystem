@@ -57,6 +57,8 @@ void free_tree(FilesBiTree tree);
 */
 void pre_order_in_name(FilesBiTree root);
 
+void pre_order_in_path(FilesBiTree root);
+
 
 /*
 // 这个函数好像没什么用
