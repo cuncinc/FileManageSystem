@@ -277,3 +277,74 @@ int copy_folder(char *destPath, FileNode *sourceNode, FilesBiTree root)
 	destNode->lch = cloneSourceNode;
 	return OK;
 }
+
+/*
+ * 实现功能：在一行中输出一个文件(夹)的文件(夹)命，大小，时间
+ * 实验要求：
+ *      1. 判断是不是文件夹，为空文件夹直接返回
+ *      2. 列与列间要对齐，参考在PowerShell中ls命令的样式
+ */
+int list_files(FilesBiTree tree)
+{
+	if(tree->info->type == file || tree->info->innerFileNum == 0) //如果为文件或者为控股文件夹
+	{
+		return Error;
+	}
+	if(tree == NULL)
+	{
+		return Error;
+	}
+
+	int i;
+	FilesBiTree node = tree->lch;
+
+	printf("\tDIR: %s\n", tree->info->path);
+	printf("\tTotal: %d\n", tree->info->innerFileNum);
+	if (0 == tree->info->innerFileNum)
+	{
+		printf("\tEmpty Direction.\n");
+	}
+	print_name("Name", 22);
+	printf("\t");
+	print_name("MofifyTime", 24);
+	printf("\t");
+	print_name("Size", 10);
+	printf("\n");
+	print_name("----", 22);
+	printf("\t");
+	print_name("-----------", 24);
+	printf("\t");
+	print_name("----", 10);
+	printf("\n");
+
+	for(i = 0; i < tree->info->innerFileNum; i++)
+	{
+		print_name(node->info->name, 22);
+		printf("\t");
+		print_name(node->info->modifyTime, 24);
+		printf("\t");
+		if(node->info->type == file)
+		{
+			char *string = get_size_string(node->info->size);
+			print_name(string, 10);
+			// free(string);	//会出bug
+		}
+		else
+		{
+			printf("<DIR>");
+		}
+		printf("\n");
+
+		node = node->rch;
+	}
+	printf("\n");
+	return OK;
+}
+
+int list_files_in_path(char *path)
+{
+	FilesBiTree blisingTree = create_blising_tree(path);
+    list_files (blisingTree);
+	free_tree(blisingTree);
+    return OK;
+}
