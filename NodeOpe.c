@@ -62,6 +62,53 @@ boolean folder_exsists(char *path)
  * 作用：返回文件(夹)名，从最后一个'\'开始到末尾
  * 用法：参数path是文件的绝对路径，文件不存在返回NULL
  */
+// char * get_name(char * p)
+// {
+//     if(p == NULL || 0==strlen(p))  //若路径不存在返回NULL
+//     {
+//     	return NULL;
+// 	}
+
+// 	char *path = (char *)malloc(sizeof(char) * (strlen(p)+1));
+// 	char *name = (char *)malloc(sizeof(char) * (strlen(p)+1));
+// 	strcpy(path, p);
+// 	int idx; //位置标记
+// 	int i, j;
+// 	//提取出路径尾的文件名
+// 	for(i = strlen(path); path[i] != '\\'; i--)
+// 	{
+// 		idx = i;
+// 	}
+
+// 	for(i = idx, j=0; path[i] != '\0'; i++, j++)
+// 	{
+// 		name[j] = path[i];
+// 	}
+// 	name[j] = '\0';
+
+// 	// 以下是去掉后缀名的代码，不需要使用
+
+// 	// if(file_exsists(path))  //如果是文件则祛除后缀名
+// 	// {
+// 	// 	for(i=strlen(name); i>=0 && name[i]!='.'; i--)
+// 	// 	{
+// 	// 		;	//空语句
+// 	// 	}
+
+// 	// 	if ( -1!=i || 0!=i  )	//排除文件名没有'.'的文件以及如".gitignore"的隐藏文件
+// 	// 	{
+// 	// 		name[i] = '\0';
+// 	// 	}
+// 	// }
+// 	char *name1 = (char *)malloc(sizeof(char) * (strlen(name)+1));
+// 	strcpy(name1, name);
+// 	free(name);
+// 	free(path);
+// 	return name1;
+// }
+
+
+
 char * get_name(char * path)
 {
     if(path == NULL || 0==strlen(path))  //若路径不存在返回NULL
@@ -70,35 +117,27 @@ char * get_name(char * path)
 	}
 
 	char *name = (char *)malloc(sizeof(char) * (strlen(path)+1));
-	int idx; //位置标记
-	int i, j;
-	//提取出路径尾的文件名
-	for(i = strlen(path); path[i] != '\\'; i--)
+	char *ch = name;
+	int length = strlen(path);
+	int i = length;
+
+	while (*path)	//移到最后
 	{
-		idx = i;
+		++path;
 	}
 
-	for(i = idx, j=0; path[i] != '\0'; i++, j++)
+	while (i>=0 && *(path-1) != '\\')	//找到最右的'\'
 	{
-		name[j] = path[i];
+		--i;
+		--path;
 	}
-	name[j] = '\0';
 
-	// 以下是去掉后缀名的代码，不需要使用
-
-	// if(file_exsists(path))  //如果是文件则祛除后缀名
-	// {
-	// 	for(i=strlen(name); i>=0 && name[i]!='.'; i--)
-	// 	{
-	// 		;	//空语句
-	// 	}
-
-	// 	if ( -1!=i || 0!=i  )	//排除文件名没有'.'的文件以及如".gitignore"的隐藏文件
-	// 	{
-	// 		name[i] = '\0';
-	// 	}
-	// }
-	char *name1 = (char *)malloc(sizeof(char) * (strlen(name)+1));
+	while (*path!='\0')	//复制
+	{
+		*ch++ = *path++;
+	}
+	*ch = '\0';
+	char * name1 = (char *)malloc(sizeof(char) * (strlen(name)+1));
 	strcpy(name1, name);
 	free(name);
 	return name1;
@@ -112,27 +151,36 @@ char * get_name(char * path)
  */
 char *get_extension(char *path)
 {
-	if(path == NULL || strchr(path, '.') == NULL)  //若路径不存在或后缀名不存在则返回NULL
+	if(path == NULL || 0==strlen(path) ||strchr(path, '.') == NULL)  //若路径不存在或后缀名不存在则返回NULL
     {
     	return NULL;
 	}
-	char *extension = (char *)malloc(sizeof(char) *(strlen(path)+1));
-	int idx; //位置标记
-	int i, j;
-	//提取出路径尾的文件拓展名
-	for(i = strlen(path); path[i] != '.'; i--)
+
+	char *name = (char *)malloc(sizeof(char) * (strlen(path)+1));
+	char *ch = name;
+	int length = strlen(path);
+	int i = length;
+
+	while (*path)	//移到最后
 	{
-		idx = i;
+		++path;
 	}
-	for(i = idx, j=0; path[i] != '\0'; i++, j++)
+
+	while (i>=0 && *(path-1) != '.')	//找到最右的'.'
 	{
-		extension[j] = path[i];
+		--i;
+		--path;
 	}
-	extension[j] = '\0';
-	char *extension1 = (char *) malloc(sizeof(char) * (strlen(extension)+1));
-	strcpy(extension1, extension);
-	free(extension);
-	return extension1;
+
+	while (*path!='\0')	//复制
+	{
+		*ch++ = *path++;
+	}
+	*ch = '\0';
+	char * name1 = (char *)malloc(sizeof(char) * (strlen(name)+1));
+	strcpy(name1, name);
+	free(name);
+	return name1;
 }
 
 
@@ -191,12 +239,17 @@ char * get_dir(char * path)
 */
 FileInfo * create_info_node(char * path)
 {
+	// printf("@@%s@@\n", path);
+	if (NULL==path || 0==strlen(path))
+	{
+		return NULL;
+	}
+	FileInfo * infoNode = (FileInfo *)malloc(sizeof(FileNode));
 	struct _stat buf;
 	int result;
 	int filenum = 0;
 	result = _stat(path, &buf); //获得文件状态信息
-	FileInfo * filehead = (FileInfo *)malloc(sizeof(FileNode));
-	if(filehead == NULL || path == NULL || result != 0)// 若内存分配失败，路径不存在或文件不存在，返回NULL
+	if(infoNode == NULL || path == NULL || result != 0)// 若内存分配失败，路径不存在或文件不存在，返回NULL
 	{
 		return NULL;
 	}
@@ -205,36 +258,46 @@ FileInfo * create_info_node(char * path)
 	int i;
 	for(i = 0; modify[i] != '\n'; i++ );
 	modify[i] = '\0';
-	filehead->modifyTime = modify;   //获得修改时间
-	filehead->modifyTimeNum = buf.st_mtime;  //获得修改时间
-
-	strcpy(filehead->modifyTime, modify);
-	filehead->path = path;
-	filehead->name = get_name(path);
+	infoNode->modifyTime = modify;   //获得修改时间
+	infoNode->modifyTimeNum = buf.st_mtime;  //获得修改时间
+	strcpy(infoNode->modifyTime, modify);
+	infoNode->path = path;
+	// printf("%s.i\n", __func__);
+	// 在i和j之间似乎有bug
+	infoNode->name = get_name(path);
+	// printf("%s.j\n", __func__);
 	if(file_exsists(path))  //如果是文件
 	{
-		filehead->type = file;
-		filehead->size = buf.st_size;
-		filehead->extension = get_extension(path);
-		filehead->innerFileNum = -1;
+		// printf("%s:file_start\n", __func__);
+		infoNode->type = file;
+		infoNode->size = buf.st_size;
+		infoNode->extension = get_extension(path);
+		infoNode->innerFileNum = -1;
+		// printf("%s:file_end\n", __func__);
 	}
 	else if(folder_exsists(path)) //如果是文件夹
 	{
-		filehead->type = folder;
-		filehead->size = -1;
-		filehead->extension = NULL;
+		// printf("%s:folder_start\n", __func__);
+		infoNode->type = folder;
+		infoNode->size = -1;
+		infoNode->extension = NULL;
 		struct dirent *entry;
+		// printf("%s:folder_1\n", __func__);
     	DIR * dir = NULL;
     	dir = opendir(path);
+		// printf("%s:folder_2\n", __func__);
 		while((entry = readdir(dir)) != 0)
 		{
-			filenum++;  //文件数目加加
+			++filenum;  //文件数目加加
 		}
+		// printf("filenum = %d\n", filenum);
+		// printf("%s:folder_3\n", __func__);
 		closedir(dir);
-		filehead->innerFileNum = filenum - 2;
+		infoNode->innerFileNum = filenum - 2;
+		// printf("%s:folder_end\n", __func__);
 	}
-
-	return filehead;
+	// printf("%s:end\n", __func__);
+	return infoNode;
 }
 
 
@@ -286,6 +349,19 @@ void pre_order_in_name(FilesBiTree root)
 	pre_order_in_name(root->rch);
 }
 
+
+
+void pre_order_in_path(FilesBiTree root)
+{
+	if(root == NULL)
+	{
+		return;
+	}
+	printf("%s\n", root->info->path);
+
+	pre_order_in_path(root->lch);
+	pre_order_in_path(root->rch);
+}
 
 
 /*

@@ -24,11 +24,12 @@
 */
 char **get_inner_pathes(FileInfo *info)
 {
+	int strLength;
 	char *path = info->path;
 	char **paths_arr = (char ** )malloc(sizeof(char* ) * info->innerFileNum);  //动态分配内存空间
 	DIR *dir = opendir(path);
 	struct dirent *entry;
-	int num;
+	int num = 0;
 	int lenth = strlen(path); //获取文件路径的长度
 	if(paths_arr == NULL || dir == NULL)//若path为空路径不存在,或内存分配失败，返回NULL
 	{
@@ -37,27 +38,36 @@ char **get_inner_pathes(FileInfo *info)
 	//把小圆点去掉
 	readdir(dir);
 	readdir(dir);
-
-	for (num=0; num<info->innerFileNum; ++num)
+	char **p;
+	for (p=paths_arr ; num < info->innerFileNum; ++p, ++num)
 	{
 		entry = readdir(dir);
+		// printf("%d: " , num);
 		// char *name = (char *)malloc(sizeof(char) * (strlen(entry->d_name)+1));
 		// strcpy(name, entry->d_name);
-
-		paths_arr[num] = (char *) malloc(sizeof(char) * (lenth+strlen(entry->d_name)+2));
+		// printf("%s:.1\n", __func__);
+		strLength = strlen(path) + entry->d_namlen + 2;
+		// printf("strlen = %d\n", strLength);
+		char *tmp = (char *)malloc(strLength * sizeof(char));
+		if (tmp==NULL)
+		{
+			printf("NULL Pointer\n");
+		}
+		// printf("%s:.2\n", __func__);
+		*p = tmp;
 		// 另两个空间，一个是\\，一个是\0
-		if(paths_arr[num] == NULL) //空间分配失败，返回NULL
+		if(*p == NULL) //空间分配失败，返回NULL
 		{
 			return NULL;
 		}
-
-		strcpy(paths_arr[num], path);
-		paths_arr[num][lenth] = '\\';  //分隔符
-
-		strcpy(paths_arr[num]+lenth+1, entry->d_name);  //生成绝对路径
-		// paths_arr[num][j] = '\0';
+		strcpy(*p, path);
+		*((*p)+lenth) = '\\';
+		// p[lenth] = '\\';  //分隔符
+		// strcpy(paths_arr[num]+lenth+1, entry->d_name);  //生成绝对路径
+		strcpy((*p)+lenth+1, entry->d_name);
 	}
 	closedir(dir);
+	// printf("%s:end", __func__);
 	return paths_arr;
 }
 
@@ -71,20 +81,23 @@ FilesBiTree create_blising_tree(char *path)
 {
 	FilesBiTree root = (FilesBiTree) malloc (sizeof(FileNode));
 	FileNode *node = root;
-	if(node == NULL ) //若分配空间失败
+	if( node == NULL ||  NULL == path || 0==strlen(path)
+	  ||  (!file_exsists(path) && !folder_exsists(path))) //若分配空间失败
 	{
 		return NULL;
 	}
 	node->rch = NULL;
 	node->info = create_info_node(path); //获取文件信息
 	int fileNum = node->info->innerFileNum;
+
 	char **p = get_inner_pathes(node->info);  //获取文件夹内的文件路径
+
+	int i;
+	char **q;
 	node->lch = (FilesBiTree) malloc (sizeof(FileNode));
 	node = node->lch;
 	node->info = create_info_node(p[0]);
 	node->lch = NULL;
-
-	int i;
 	for(i = 1; i < fileNum; ++i)
 	{
 		node->rch = (FilesBiTree) malloc (sizeof(FileNode)); //右子结点为目录下的后面文件
@@ -93,7 +106,6 @@ FilesBiTree create_blising_tree(char *path)
 		node->info = create_info_node(p[i]);
 	}
 	node->rch = NULL;	//到了最后一个右孩子
-
 	return root;
 }
 
@@ -107,11 +119,12 @@ FilesBiTree create_blising_tree(char *path)
 FilesBiTree create_files_bitree(char *path)
 {
 	FilesBiTree root = (FilesBiTree) malloc (sizeof(FileNode));
-	if(root == NULL   ) //若分配空间失败
+	if(root == NULL || (!file_exsists(path) && !folder_exsists(path)))
 	{
 		return NULL;
 	}
 	root->info = create_info_node(path); //获取文件信息
+
 	if(root->info == NULL)  //若文件不存在，返回NULL
 	{
 		free(root);
