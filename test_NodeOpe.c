@@ -4,44 +4,36 @@
 //2019.12.11
 int main()
 {
-	char *path1 = "E:\\CC\\Code\\VSCode\\Default\\Data structure\\FMS\\test_NodeOpe.c"; //文件
-	char *path2 = "E:\\CC\\Code\\VSCode\\Default\\Data structure\\FMS"; //文件??
-	char *path3 = "E:\\CC\\Code\\From_GitHub\\Xin-Yue\\现场?_?我所亲历的邓同学被约谈事件.png";
+	char *path2 = "E:\\CC\\Code\\VSCode\\Default\\Data structure\\FMS\\test_NodeOpe.c"; //文件
+	char *path1 = "E:\\CC\\Code\\VSCode\\Default\\Data structure\\FMS"; //文件夹
 // 测试get_name()函数
-	char *name  = get_name(path3);
-	printf("%s\n", name);
+	char *name  = get_name(path1);
+	printf("name = %s\n", name);
 
 //	测试get_extension()函数
-	char *extension = get_extension(path3);
-	printf("%s\n", extension);
+	char *extension = get_extension(path1);
+	printf("extension = %s\n", extension);
 
 //	测试get_file_size()函数
-	long int size  = get_file_size(path3);
-	printf("%ld\n", size);
-
-//	测试get_file_status()函数
-	// get_file_status(path3);
+	long int size  = get_file_size(path1);
+	printf("size = %ldByte, %s\n", size, get_size_string(size));
 
 //	测试file_exsists()函数
-	printf("%d\n", file_exsists(path3));
+	printf("if file exsists? %d\n", file_exsists(path1));
 
 //	测试folder_exsists()函数
-	printf("%d\n", folder_exsists(path3));
-
-//	测试get_dir()函数
-	printf("%s\n", get_dir(path3));
-
+	printf("if folder exsists? %d\n\n", folder_exsists(path1));
 
 //	测试create_info_node()函数
-	// FileInfo * head =  create_info_node(path3);
-	// printf("type: %d\n", head->type);
-	// printf("name: %s\n", head->name);
-	// printf("path: %s\n", head->path);
-	// printf("timeNum:  %ld\n", head->modifyTimeNum);
-	// printf("time: %s\n", head->modifyTime);
-	// printf("size: %ld\n", head->size);
-	// printf("extension: %s\n", head->extension);
-	// printf("innerFileNum: %d\n", head->innerFileNum);
+	FileInfo * head =  create_info_node(path1);
+	printf("type: %d\n", head->type);
+	printf("name: %s\n", head->name);
+	printf("path: %s\n", head->path);
+	printf("timeNum:  %ld\n", head->modifyTimeNum);
+	printf("time: %s\n", head->modifyTime);
+	printf("size: %ld\n", head->size);
+	printf("extension: %s\n", head->extension);
+	printf("innerFileNum: %d\n", head->innerFileNum);
 
 	system("pause");
 	return 0;

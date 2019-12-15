@@ -240,9 +240,10 @@ FileNode *locate_node(char *path, FilesBiTree root)
 }
 
 
+
 int copy_folder(char *destPath, FileNode *sourceNode, FilesBiTree root)
 {
-	if(file_exsists(destPath) || sourceNode == NULL || root == NULL || destPath == NULL) //如果待复制路径为文件或其他异常
+	if( destPath == NULL || sourceNode == NULL || root == NULL || file_exsists(destPath)) //如果待复制路径为文件或其他异常
 	{
 		return Error;
 	}
@@ -271,12 +272,13 @@ int copy_folder(char *destPath, FileNode *sourceNode, FilesBiTree root)
 		return Error;
 	}
 	FileNode *destNode = locate_node(destPath, root);  //定位到待复制的结点
-
 	//用头插法
 	cloneSourceNode->rch = destNode->lch;
 	destNode->lch = cloneSourceNode;
 	return OK;
 }
+
+
 
 /*
  * 实现功能：在一行中输出一个文件(夹)的文件(夹)命，大小，时间
@@ -344,7 +346,28 @@ int list_files(FilesBiTree tree)
 int list_files_in_path(char *path)
 {
 	FilesBiTree blisingTree = create_blising_tree(path);
-    list_files (blisingTree);
+    list_files(blisingTree);
 	free_tree(blisingTree);
     return OK;
 }
+
+
+
+// /*
+//  * 返回类型：OK表示成功执行，ERROR表示执行失败
+//  * 实现功能：打印此目录下的文件(夹)，参考在powerShell中使用tree命令的效果
+//  * 实现要求：
+//  *          1. 要先判断接收到的是文件还是文件夹
+//  *          2. 若文件夹为空，则直接返回
+//  *          3. 递归调用，输出此文件夹下的所有文件(夹)
+//  */
+// int tree_files(FilesBiTree tree)
+// {
+// 	if (NULL == tree)
+// 	{
+// 		return;
+// 	}
+// 	printf("%s", tree->info->name);
+// 	printf()
+
+// }

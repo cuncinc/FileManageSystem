@@ -102,8 +102,9 @@ int list_files_in_path(char *path);
  *          并把节点的指针存储在一个只读链表(数组)中，在UI中显示是需要二级指针
  * 难点：要使用二级指针
  * 优化：效率可能会很低，可以想办法建一个索引
+ * 使用：把
 */
-FileNode **find(FileNode * dir, char *name);
+FileNode *find(FileNode * dir, char *name);
 
 
 

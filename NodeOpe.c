@@ -183,7 +183,6 @@ char *get_extension(char *path)
 	return name1;
 }
 
-
 /*
  * Author: 宋淳  Modify:谢文韬
  * 作用：返回文件的大小，单位为Byte(字节)
@@ -198,7 +197,6 @@ long get_file_size(char *path)
     fclose(f);
     return size;
 }
-
 
 
 /*
@@ -228,7 +226,7 @@ char * get_dir(char * path)
 	printf("%s", absolut_path);
 	char *absolut_path1 = (char *) malloc(sizeof(char) * (strlen(absolut_path)+1));
 	strcpy(absolut_path1, absolut_path);
-	free(absolut_path);
+	// free(absolut_path);
 	return absolut_path1;
 }
 
@@ -354,6 +352,9 @@ void pre_order_in_name(FilesBiTree root)
 
 
 
+/*
+ * 作用：前序遍历输出文件二叉树节点的path
+*/
 void pre_order_in_path(FilesBiTree root)
 {
 	if(root == NULL)
@@ -378,6 +379,11 @@ void free_tree(FilesBiTree tree)
 		return;
 	free(tree->lch);
 	free(tree->rch);
+	free(tree->info->extension);
+	// free(tree->info->modifyTime);
+	free(tree->info->name);
+	free(tree->info->path);
+	// free(tree->info);	//free不了？
 	free(tree);
 	return;
 }
